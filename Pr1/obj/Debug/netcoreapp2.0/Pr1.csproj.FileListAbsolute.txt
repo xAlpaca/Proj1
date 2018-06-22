@@ -1,0 +1,11 @@
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\bin\Debug\netcoreapp2.0\Pr1.deps.json
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\bin\Debug\netcoreapp2.0\Pr1.runtimeconfig.json
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\bin\Debug\netcoreapp2.0\Pr1.runtimeconfig.dev.json
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\bin\Debug\netcoreapp2.0\Pr1.dll
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\bin\Debug\netcoreapp2.0\Pr1.pdb
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.csprojAssemblyReference.cache
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.csproj.CoreCompileInputs.cache
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.AssemblyInfoInputs.cache
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.AssemblyInfo.cs
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.dll
+D:\Альпака\Программирование\Visual Studio\Pr1\Pr1\obj\Debug\netcoreapp2.0\Pr1.pdb
