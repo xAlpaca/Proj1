@@ -20,7 +20,7 @@ namespace Pr1
 
         public void MoveDown()
         {
-            if (y < Program.Y_MAX)
+            if (y < Program.Y_MAX - 1)
             {
                 y += 1;
             }
@@ -44,7 +44,7 @@ namespace Pr1
 
         public void MoveRight()
         {
-            if (x < Program.X_MAX)
+            if (x < Program.X_MAX - 1)
             {
                 x = x + 1;
             }
@@ -94,19 +94,35 @@ namespace Pr1
         public static void DrawConsole(Hero cr)
         {
             Console.Clear();
-            for (int y = 0; y < Program.Y_MAX; y++)
+            for (int y = -1; y < Program.Y_MAX + 1; y++)
             {
-                for (int x = 0; x < Program.X_MAX; x++)
+                
+                for (int x = -1; x < Program.X_MAX + 1; x++)
                 {
-                    if (y==cr.y && x==cr.x)
+                    if (y == -1 || y == Program.Y_MAX)
                     {
-                        Console.Write("%");
+                        Console.Write("*");
                     }
                     else
                     {
-                        Console.Write(" ");
-                    }
+                        if (x == -1 || x == Program.X_MAX)
+                        {
+                            Console.Write("*");
 
+
+                        }
+                        else
+                        {
+                            if (y == cr.y && x == cr.x)
+                            {
+                                Console.Write("%");
+                            }
+                            else
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                    }
                 }
                 Console.WriteLine();
             }
