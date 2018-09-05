@@ -1,12 +1,52 @@
 ﻿using System;
 
 namespace Pr1
+
 {
+    public class Point
+    {
+        Random XY = new Random();
+        public int X { get; private set; }
+        public int Y { get; private set; }
+
+        public Point()
+        {
+            Reset();
+        }
+        public void Reset()
+        {
+            X = XY.Next(1, Program.X_MAX);
+            Y = XY.Next(1, Program.Y_MAX);
+        }
+    }
+
     class Hero
     {
-        public int x = 0;
-        public int y = 0;
-        public void Moveup()
+        public int x { get; private set; }
+        public int y { get; private set; }
+        public int counter;
+        public int direction = 0;
+        
+        public void Move()
+        {
+            switch (direction)
+            {
+                case 0:
+                    Moveup();
+                    break;
+                case 1:
+                    MoveDown();
+                    break;
+                case 2:
+                    MoveRight();
+                    break;
+                case 3:
+                    MoveLeft();
+                    break;
+            }
+        }
+
+        void Moveup()
         {
             if (y > 0)
             {
@@ -18,7 +58,7 @@ namespace Pr1
             }
         }
 
-        public void MoveDown()
+        void MoveDown()
         {
             if (y < Program.Y_MAX - 1)
             {
@@ -29,7 +69,8 @@ namespace Pr1
                 y = 0;
             }
         }
-        public void MoveLeft()
+
+        void MoveLeft()
         {
             if (x > 0)
             {
@@ -42,7 +83,7 @@ namespace Pr1
 
         }
 
-        public void MoveRight()
+        void MoveRight()
         {
             if (x < Program.X_MAX - 1)
             {
@@ -64,34 +105,42 @@ namespace Pr1
         static void Main(String[] args)
         {
             Hero cr = new Hero();
-            DrawConsole(cr);
+            Point pls = new Point();
+
+            DrawConsole(cr, pls);
             while (true)
             {
-                var w = Console.ReadKey();
+                System.Threading.Thread.Sleep(100);
 
-                if (w.KeyChar.Equals('w'))
+                if (Console.KeyAvailable)
                 {
-                    cr.Moveup();
+                    var key = Console.ReadKey();
+                    if (key.KeyChar.Equals('w'))
+                    {
+                        cr.direction = 0;
+                    }
+                    if (key.KeyChar.Equals('s'))
+                    {
+                        cr.direction = 1;
+                    }
+
+                    if (key.KeyChar.Equals('d'))
+                    {
+                        cr.direction = 2;
+                    }
+
+                    if (key.KeyChar.Equals('a'))
+                    {
+                        cr.direction = 3;
+                    }
                 }
+                cr.Move();
                 
-                if (w.KeyChar.Equals('s'))
-                {
-                    cr.MoveDown();
-                }
-                
-                if (w.KeyChar.Equals('d'))
-                {
-                    cr.MoveRight();
-                }
-                
-                if (w.KeyChar.Equals('a'))
-                {
-                    cr.MoveLeft();
-                }
-                DrawConsole(cr);
+                DrawConsole(cr, pls);
             }
         }
-        public static void DrawConsole(Hero cr)
+
+        public static void DrawConsole(Hero cr, Point pls)
         {
             Console.Clear();
             for (int y = -1; y < Program.Y_MAX + 1; y++)
@@ -108,14 +157,16 @@ namespace Pr1
                         if (x == -1 || x == Program.X_MAX)
                         {
                             Console.Write("*");
-
-
                         }
                         else
                         {
                             if (y == cr.y && x == cr.x)
                             {
-                                Console.Write("%");
+                                Console.Write("X");
+                            }
+                            else if (pls.X == x && pls.Y == y)
+                            {
+                                Console.Write("+");
                             }
                             else
                             {
@@ -123,9 +174,17 @@ namespace Pr1
                             }
                         }
                     }
+                    if (cr.y == pls.Y && cr.x == pls.X)
+                    {
+                        pls.Reset();
+                        cr.counter += 1;
+                    }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
+            Console.WriteLine("Счёт: " + cr.counter);
+            
         }
     }
 }
