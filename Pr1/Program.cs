@@ -1,5 +1,6 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
 namespace Pr1
 
 {
@@ -19,13 +20,35 @@ namespace Pr1
             Y = XY.Next(1, Program.Y_MAX);
         }
     }
+    public struct Coord
+    {
+        public int X;
+        public int Y;
+
+        public Coord(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+    }
 
     class Hero
     {
+        public LinkedList<Coord> tail = new LinkedList<Coord>();
+        public Hero()
+        {
+            tail.AddFirst(new Coord(0,0));
+        }
+
         public int x { get; private set; }
         public int y { get; private set; }
         public int counter;
         public int direction = 0;
+        private bool isStepToX = false;
+        public void StepToX()
+        {
+            isStepToX = true;
+        }
         
         public void Move()
         {
@@ -48,52 +71,71 @@ namespace Pr1
 
         void Moveup()
         {
-            if (y > 0)
+            Coord head = tail.First.Value;
+            Coord newCoor = new Coord(head.X, head.Y);
+            if (newCoor.Y > 0)
             {
-                y = y - 1;
+                newCoor.Y = newCoor.Y - 1;
             }
             else
             {
-                y = Program.Y_MAX - 1;
+                newCoor.Y = Program.Y_MAX - 1;
+
             }
+            tail.AddFirst(newCoor);
+            if (isStepToX == true) isStepToX = false;
+            else tail.RemoveLast();
         }
 
         void MoveDown()
         {
-            if (y < Program.Y_MAX - 1)
+            Coord head = tail.First.Value;
+            Coord newCoor = new Coord(head.X, head.Y);
+            if (newCoor.Y < Program.Y_MAX - 1)
             {
-                y += 1;
+                newCoor.Y += 1;
             }
             else
             {
-                y = 0;
+                newCoor.Y = 0;
             }
+            tail.AddFirst(newCoor);
+            if (isStepToX == true) isStepToX = false;
+            else tail.RemoveLast();
         }
 
         void MoveLeft()
         {
-            if (x > 0)
+            Coord head = tail.First.Value;
+            Coord newCoor = new Coord(head.X, head.Y);
+            if (newCoor.X > 0)
             {
-                x = x - 1;
+                newCoor.X = newCoor.X - 1;
             }
             else
             {
-                x = Program.X_MAX - 1 ;
+                newCoor.X = Program.X_MAX - 1 ;
             }
-
+            tail.AddFirst(newCoor);
+            if (isStepToX == true) isStepToX = false;
+            else tail.RemoveLast();
         }
 
         void MoveRight()
         {
-            if (x < Program.X_MAX - 1)
+            Coord head = tail.First.Value;
+            Coord newCoor = new Coord(head.X, head.Y);
+            if (newCoor.X < Program.X_MAX - 1)
             {
-                x = x + 1;
+                newCoor.X = newCoor.X + 1;
             }
             else
             {
-                x = 0;
+                newCoor.X = 0;
             }
-
+            tail.AddFirst(newCoor);
+            if (isStepToX == true) isStepToX = false;
+            else tail.RemoveLast();
         }
     }
 
@@ -110,7 +152,7 @@ namespace Pr1
             DrawConsole(cr, pls);
             while (true)
             {
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(277);
 
                 if (Console.KeyAvailable)
                 {
@@ -160,9 +202,16 @@ namespace Pr1
                         }
                         else
                         {
-                            if (y == cr.y && x == cr.x)
+                            if (cr.tail.Any(cell => cell.X==x && cell.Y==y))
                             {
-                                Console.Write("X");
+                                if (cr.tail.First.Value.X == pls.X && cr.tail.First.Value.Y == pls.Y)
+                                {
+                                    Console.Write("X");
+                                }
+                                else
+                                {
+                                    Console.Write("#");
+                                }
                             }
                             else if (pls.X == x && pls.Y == y)
                             {
@@ -174,9 +223,10 @@ namespace Pr1
                             }
                         }
                     }
-                    if (cr.y == pls.Y && cr.x == pls.X)
+                    if (cr.tail.First.Value.X == pls.X && cr.tail.First.Value.Y == pls.Y)
                     {
                         pls.Reset();
+                        cr.StepToX(); 
                         cr.counter += 1;
                     }
                 }
